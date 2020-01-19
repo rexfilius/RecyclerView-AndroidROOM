@@ -11,7 +11,9 @@ import androidx.annotation.Nullable;
 import com.example.todo.model.Task;
 import com.example.todo.util.Constants;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class DatabaseHandler extends SQLiteOpenHelper {
@@ -28,7 +30,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         String CREATE_TASK_TABLE ="CREATE TABLE " + Constants.TABLE_NAME + "("
                 + Constants.KEY_ID + " INTEGER PRIMARY KEY,"
                 + Constants.KEY_TASK + " TEXT,"
-                + Constants.KEY_TIME_DURATION + "INTEGER);";
+                + Constants.KEY_TIME_DURATION + "INTEGER,"
+                + Constants.KEY_DATE_NAME + " LONG);";
         db.execSQL(CREATE_TASK_TABLE);
     }
 
@@ -44,6 +47,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(Constants.KEY_TASK, task.getNameOfTask());
         values.put(Constants.KEY_TIME_DURATION, task.getTimeDuration());
+        values.put(Constants.KEY_DATE_NAME, java.lang.System.currentTimeMillis());
 
         db.insert(Constants.TABLE_NAME, null, values);
     }
@@ -54,7 +58,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         Cursor cursor = db.query(Constants.TABLE_NAME,
                 new String[]{Constants.KEY_ID,
                             Constants.KEY_TASK,
-                            Constants.KEY_TIME_DURATION},
+                            Constants.KEY_TIME_DURATION,
+                            Constants.KEY_DATE_NAME},
                 Constants.KEY_ID + "=?",
                 new String[]{String.valueOf(id)}, null, null, null, null);
 
@@ -70,6 +75,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                     Constants.KEY_TASK)));
             task.setTimeDuration(cursor.getInt(cursor.getColumnIndex(
                     Constants.KEY_TIME_DURATION)));
+
+            DateFormat dateFormat = DateFormat.getDateInstance();
+            String formattedDate = dateFormat.format(new Date(cursor.getLong(
+                    cursor.getColumnIndex(Constants.KEY_DATE_NAME))).getTime());
+            task.setDateTaskAdded(formattedDate);
         }
         return task;
     }
@@ -81,9 +91,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         Cursor cursor = db.query(Constants.TABLE_NAME,
                 new String[]{Constants.KEY_ID,
                             Constants.KEY_TASK,
-                            Constants.KEY_TIME_DURATION},
+                            Constants.KEY_TIME_DURATION,
+                            Constants.KEY_DATE_NAME},
                 null, null, null, null,
-                null);
+                Constants.KEY_DATE_NAME + " DESC");
 
         if (cursor.moveToFirst()) {
             do {
@@ -94,6 +105,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                         Constants.KEY_TASK)));
                 task.setTimeDuration(cursor.getInt(cursor.getColumnIndex(
                         Constants.KEY_TIME_DURATION)));
+
+                DateFormat dateFormat = DateFormat.getDateInstance();
+                String formattedDate = dateFormat.format(new Date(cursor.getLong(
+                        cursor.getColumnIndex(Constants.KEY_DATE_NAME))).getTime());
+                task.setDateTaskAdded(formattedDate);
+
+                taskList.add(task);
             } while(cursor.moveToNext());
         }
         return taskList;
@@ -105,6 +123,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(Constants.KEY_TASK, task.getNameOfTask());
         values.put(Constants.KEY_TIME_DURATION, task.getTimeDuration());
+        values.put(Constants.KEY_DATE_NAME, java.lang.System.currentTimeMillis());
 
         return db.update(Constants.TABLE_NAME, values, Constants.KEY_ID + "=?",
                         new String[]{String.valueOf(task.getId())});

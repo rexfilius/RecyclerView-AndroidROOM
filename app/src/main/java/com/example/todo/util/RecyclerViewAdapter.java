@@ -49,6 +49,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 task.getNameOfTask()));
         viewHolder.timeDuration.setText(MessageFormat.format("Duration: {0}",
                 String.valueOf(task.getTimeDuration())));
+        viewHolder.dateAdded.setText(MessageFormat.format("Added on: {0}",
+                task.getDateTaskAdded()));
     }
 
     @Override
@@ -60,6 +62,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         public TextView taskName;
         public TextView timeDuration;
+        public TextView dateAdded;
         public Button editButton;
         public Button deleteButton;
         public int id;
@@ -70,6 +73,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
             taskName = itemView.findViewById(R.id.list_row_name);
             timeDuration = itemView.findViewById(R.id.list_row_time_duration);
+            dateAdded = itemView.findViewById(R.id.list_row_date_added);
             editButton = itemView.findViewById(R.id.list_row_edit_button);
             deleteButton = itemView.findViewById(R.id.list_row_delete_button);
 

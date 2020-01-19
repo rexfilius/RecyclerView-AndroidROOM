@@ -5,6 +5,7 @@ public class Task {
     private String nameOfTask;
     private int timeDuration;
     private int id;
+    private String dateTaskAdded;
 
     public Task() {
     }
@@ -42,5 +43,13 @@ public class Task {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getDateTaskAdded() {
+        return dateTaskAdded;
+    }
+
+    public void setDateTaskAdded(String dateTaskAdded) {
+        this.dateTaskAdded = dateTaskAdded;
     }
 }
