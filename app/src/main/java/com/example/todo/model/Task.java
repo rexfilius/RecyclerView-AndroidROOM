@@ -1,21 +1,34 @@
 package com.example.todo.model;
 
+import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity(tableName = "task_table")
 public class Task {
 
+    @NonNull @ColumnInfo(name = "task_name_col")
     private String nameOfTask;
-    private int timeDuration;
+
+    @PrimaryKey(autoGenerate = true)
     private int id;
+
+    @NonNull @ColumnInfo(name = "time_duration_col")
+    private int timeDuration;
+
+    @NonNull @ColumnInfo(name = "date_col")
     private String dateTaskAdded;
 
     public Task() {
     }
 
-    public Task(String nameOfTask, int timeDuration) {
+    public Task(@NonNull String nameOfTask, int timeDuration) {
         this.nameOfTask = nameOfTask;
         this.timeDuration = timeDuration;
     }
 
-    public Task(String nameOfTask, int timeDuration, int id) {
+    public Task(@NonNull  String nameOfTask, int timeDuration, int id) {
         this.nameOfTask = nameOfTask;
         this.timeDuration = timeDuration;
         this.id = id;

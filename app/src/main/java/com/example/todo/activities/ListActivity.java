@@ -1,4 +1,4 @@
-package com.example.todo;
+package com.example.todo.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.todo.R;
 import com.example.todo.data.DatabaseHandler;
 import com.example.todo.model.Task;
 import com.example.todo.util.RecyclerViewAdapter;

@@ -1,9 +1,10 @@
-package com.example.todo;
+package com.example.todo.activities;
 
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.example.todo.R;
 import com.example.todo.data.DatabaseHandler;
 import com.example.todo.model.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
