@@ -1,6 +1,7 @@
 package com.example.todo.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LiveData;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -14,7 +15,9 @@ import android.widget.EditText;
 
 import com.example.todo.R;
 import com.example.todo.data.DatabaseHandler;
+import com.example.todo.data.TaskDao;
 import com.example.todo.model.Task;
+import com.example.todo.model.TaskViewModel;
 import com.example.todo.util.RecyclerViewAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -35,6 +38,7 @@ public class ListActivity extends AppCompatActivity {
     private Button saveButton;
     private EditText taskName;
     private EditText timeDuration;
+    private TaskDao taskDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,8 +51,9 @@ public class ListActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        taskList = new ArrayList<>();
-        taskList = databaseHandler.getAllTask();
+        //taskList = new ArrayList<>();
+        //taskList = databaseHandler.getAllTask();
+        //taskList = (List<Task>) taskDao.getAllTask();
 
         recyclerViewAdapter = new RecyclerViewAdapter(this, taskList);
         recyclerView.setAdapter(recyclerViewAdapter);
@@ -95,7 +100,8 @@ public class ListActivity extends AppCompatActivity {
 
         task.setNameOfTask(newTaskName);
         task.setTimeDuration(newTimeDuration);
-        databaseHandler.addTask(task);
+        //databaseHandler.addTask(task);
+        taskDao.insert(task);
         Snackbar.make(view, "Item Saved", Snackbar.LENGTH_SHORT).show();
 
         new Handler().postDelayed(new Runnable() {

@@ -10,11 +10,14 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.todo.R;
 import com.example.todo.data.DatabaseHandler;
+import com.example.todo.data.TaskDao;
 import com.example.todo.model.Task;
+import com.example.todo.model.TaskViewModel;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.text.MessageFormat;
@@ -27,6 +30,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private AlertDialog.Builder builder;
     private AlertDialog dialog;
     private LayoutInflater inflater;
+    private  TaskDao taskDao;
 
     public RecyclerViewAdapter(Context context, List<Task> taskList) {
         this.context = context;
@@ -56,6 +60,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public int getItemCount() {
         return taskList.size();
+        //return taskDao.getTaskCount();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -124,14 +129,15 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             saveButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    DatabaseHandler databaseHandler = new DatabaseHandler(context);
+                    //DatabaseHandler databaseHandler = new DatabaseHandler(context);
                     newTask.setNameOfTask(taskName.getText().toString());
                     newTask.setTimeDuration(Integer.parseInt(
                             timeDuration.getText().toString()));
 
                     if(!taskName.getText().toString().isEmpty()
                     && !timeDuration.getText().toString().isEmpty()) {
-                        databaseHandler.updateTask(newTask);
+                        //databaseHandler.updateTask(newTask);
+                        taskDao.insert(newTask);
                         notifyItemChanged(getAdapterPosition(), newTask);
                     } else {
                         Snackbar.make(view, "Fields Empty", Snackbar.LENGTH_SHORT).show();
@@ -157,8 +163,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             yesButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    DatabaseHandler db = new DatabaseHandler(context);
-                    db.deleteTask(id);
+                    //DatabaseHandler db = new DatabaseHandler(context);
+                    //db.deleteTask(id);
+                    taskDao.deleteTask(id);
                     taskList.remove(getAdapterPosition());
                     notifyItemChanged(getAdapterPosition());
                     dialog.dismiss();

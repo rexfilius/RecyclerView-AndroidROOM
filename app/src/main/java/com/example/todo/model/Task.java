@@ -3,6 +3,7 @@ package com.example.todo.model;
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "task_table")
@@ -23,11 +24,13 @@ public class Task {
     public Task() {
     }
 
+    @Ignore
     public Task(@NonNull String nameOfTask, int timeDuration) {
         this.nameOfTask = nameOfTask;
         this.timeDuration = timeDuration;
     }
 
+    @Ignore
     public Task(@NonNull  String nameOfTask, int timeDuration, int id) {
         this.nameOfTask = nameOfTask;
         this.timeDuration = timeDuration;
