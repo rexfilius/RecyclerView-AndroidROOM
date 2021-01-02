@@ -9,16 +9,16 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "task_table")
 public class Task {
 
-    @NonNull @ColumnInfo(name = "task_name_col")
-    private String nameOfTask;
-
     @PrimaryKey(autoGenerate = true)
     private int id;
 
-    @NonNull @ColumnInfo(name = "time_duration_col")
+    @ColumnInfo(name = "task_name_col")
+    private String nameOfTask;
+
+    @ColumnInfo(name = "time_duration_col")
     private int timeDuration;
 
-    @NonNull @ColumnInfo(name = "date_col")
+    @ColumnInfo(name = "date_col")
     private String dateTaskAdded;
 
     public Task() {
@@ -30,28 +30,12 @@ public class Task {
         this.timeDuration = timeDuration;
     }
 
-    @Ignore
-    public Task(@NonNull String nameOfTask, int timeDuration, int id) {
-        this.nameOfTask = nameOfTask;
-        this.timeDuration = timeDuration;
-        this.id = id;
-    }
-
-    public String getNameOfTask() {
-        return nameOfTask;
-    }
-
-    public void setNameOfTask(String nameOfTask) {
-        this.nameOfTask = nameOfTask;
-    }
-
-    public int getTimeDuration() {
-        return timeDuration;
-    }
-
-    public void setTimeDuration(int timeDuration) {
-        this.timeDuration = timeDuration;
-    }
+//    @Ignore
+//    public Task(@NonNull String nameOfTask, int timeDuration, int id) {
+//        this.nameOfTask = nameOfTask;
+//        this.timeDuration = timeDuration;
+//        this.id = id;
+//    }
 
     public int getId() {
         return id;
@@ -61,8 +45,26 @@ public class Task {
         this.id = id;
     }
 
+    public String getNameOfTask() {
+        return nameOfTask;
+    }
+
+    public int getTimeDuration() {
+        return timeDuration;
+    }
+
     public String getDateTaskAdded() {
         return dateTaskAdded;
+    }
+
+    // Other Setters
+
+    public void setNameOfTask(String nameOfTask) {
+        this.nameOfTask = nameOfTask;
+    }
+
+    public void setTimeDuration(int timeDuration) {
+        this.timeDuration = timeDuration;
     }
 
     public void setDateTaskAdded(String dateTaskAdded) {
