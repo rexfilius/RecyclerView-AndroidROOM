@@ -31,7 +31,7 @@ public class Task {
     }
 
     @Ignore
-    public Task(@NonNull  String nameOfTask, int timeDuration, int id) {
+    public Task(@NonNull String nameOfTask, int timeDuration, int id) {
         this.nameOfTask = nameOfTask;
         this.timeDuration = timeDuration;
         this.id = id;

@@ -16,7 +16,7 @@ public interface TaskDao {
     void insert(Task task);
 
     @Query("DELETE from task_table where id = :id")
-    int deleteTask(int id);
+    void deleteTask(int id);
 
     @Query("UPDATE task_table SET task_name_col = :taskNameText WHERE id = :id")
     int updateTask(int id, String taskNameText);

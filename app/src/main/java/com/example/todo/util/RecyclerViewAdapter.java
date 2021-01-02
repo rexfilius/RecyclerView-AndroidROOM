@@ -10,17 +10,15 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.LiveData;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.todo.R;
-import com.example.todo.data.DatabaseHandler;
 import com.example.todo.data.TaskDao;
 import com.example.todo.model.Task;
-import com.example.todo.model.TaskViewModel;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
@@ -30,7 +28,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private AlertDialog.Builder builder;
     private AlertDialog dialog;
     private LayoutInflater inflater;
-    private  TaskDao taskDao;
+    private TaskDao taskDao;
 
     public RecyclerViewAdapter(Context context, List<Task> taskList) {
         this.context = context;
@@ -115,6 +113,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             taskName = view.findViewById(R.id.popup_name);
             timeDuration = view.findViewById(R.id.popup_time_duration);
             title = view.findViewById(R.id.popup_title);
+
             title.setText(R.string.edit_popup_title);
             saveButton = view.findViewById(R.id.popup_save_button);
             saveButton.setText(R.string.update_save_button_text);
