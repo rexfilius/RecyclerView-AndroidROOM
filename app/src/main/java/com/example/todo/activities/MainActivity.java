@@ -5,14 +5,15 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.todo.R;
-import com.example.todo.data.DatabaseHandler;
-import com.example.todo.model.Task;
-import com.example.todo.util.TaskRepository;
+import com.example.todo.database.DatabaseHandler;
+import com.example.todo.database.Task;
+import com.example.todo.model.TaskViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Handler;
 import android.view.View;
@@ -30,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
     private EditText taskName;
     private EditText timeDuration;
 
+    private TaskViewModel mTaskViewModel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,16 +40,16 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        databaseHandler = new DatabaseHandler(this);
-        byPassActivity();
+        mTaskViewModel = new ViewModelProvider.AndroidViewModelFactory(
+                this.getApplication()).create(TaskViewModel.class);
+        //databaseHandler = new DatabaseHandler(this);
+        //byPassActivity();
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 createPopupDialog();
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
             }
         });
     }
@@ -83,7 +86,8 @@ public class MainActivity extends AppCompatActivity {
 
         task.setNameOfTask(newTaskName);
         task.setTimeDuration(newTimeDuration);
-        databaseHandler.addTask(task);
+        mTaskViewModel.insert(task);
+        //databaseHandler.addTask(task);
         Snackbar.make(view, "Item Saved", Snackbar.LENGTH_SHORT).show();
 
         new Handler().postDelayed(new Runnable() {
@@ -123,4 +127,6 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
 }
+

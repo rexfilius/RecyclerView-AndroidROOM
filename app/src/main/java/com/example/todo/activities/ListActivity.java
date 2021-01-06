@@ -1,7 +1,6 @@
 package com.example.todo.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.LiveData;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -14,21 +13,19 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.todo.R;
-import com.example.todo.data.DatabaseHandler;
-import com.example.todo.data.TaskDao;
-import com.example.todo.model.Task;
-import com.example.todo.model.TaskViewModel;
-import com.example.todo.util.RecyclerViewAdapter;
+import com.example.todo.database.DatabaseHandler;
+import com.example.todo.database.TaskDao;
+import com.example.todo.database.Task;
+import com.example.todo.util.TaskListAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ListActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
-    private RecyclerViewAdapter recyclerViewAdapter;
+    private TaskListAdapter mTaskListAdapter;
     private List<Task> taskList;
     private DatabaseHandler databaseHandler;
     private FloatingActionButton fab;
@@ -55,9 +52,9 @@ public class ListActivity extends AppCompatActivity {
         //taskList = databaseHandler.getAllTask();
         //taskList = (List<Task>) taskDao.getAllTask();
 
-        recyclerViewAdapter = new RecyclerViewAdapter(this, taskList);
-        recyclerView.setAdapter(recyclerViewAdapter);
-        recyclerViewAdapter.notifyDataSetChanged();
+        mTaskListAdapter = new TaskListAdapter(this);
+        recyclerView.setAdapter(mTaskListAdapter);
+        mTaskListAdapter.notifyDataSetChanged();
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override

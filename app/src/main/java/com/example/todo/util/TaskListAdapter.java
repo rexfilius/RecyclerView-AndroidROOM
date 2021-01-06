@@ -13,26 +13,30 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.todo.R;
-import com.example.todo.data.TaskDao;
-import com.example.todo.model.Task;
+import com.example.todo.database.TaskDao;
+import com.example.todo.database.Task;
+import com.example.todo.model.TaskViewModel;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
+public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHolder> {
+
+    private List<Task> taskList;
+    private TaskViewModel mTaskViewModel;
 
     private Context context;
-    private List<Task> taskList;
     private AlertDialog.Builder builder;
     private AlertDialog dialog;
     private LayoutInflater inflater;
     private TaskDao taskDao;
 
-    public RecyclerViewAdapter(Context context, List<Task> taskList) {
+    // is this constructor necessary ?
+    public TaskListAdapter(Context context) {
         this.context = context;
-        this.taskList = taskList;
+        this.taskList = new ArrayList<>();
     }
 
     @NonNull
@@ -58,7 +62,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public int getItemCount() {
         return taskList.size();
-        //return taskDao.getTaskCount();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -95,7 +98,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                     editTask(task);
                     break;
                 case R.id.list_row_delete_button:
-                    deleteTask(task.getId());
+                    //deleteTask(task.getId());
+                    deleteTask(task);
                     break;
             }
         }
@@ -133,10 +137,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                     newTask.setTimeDuration(Integer.parseInt(
                             timeDuration.getText().toString()));
 
-                    if(!taskName.getText().toString().isEmpty()
-                    && !timeDuration.getText().toString().isEmpty()) {
+                    if (!taskName.getText().toString().isEmpty()
+                            && !timeDuration.getText().toString().isEmpty()) {
                         //databaseHandler.updateTask(newTask);
-                        taskDao.insert(newTask);
+                        //taskDao.insert(newTask);
+                        mTaskViewModel.update(newTask);
                         notifyItemChanged(getAdapterPosition(), newTask);
                     } else {
                         Snackbar.make(view, "Fields Empty", Snackbar.LENGTH_SHORT).show();
@@ -147,7 +152,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         }
 
-        private void deleteTask(final int id) {
+        private void deleteTask(final Task task) {
+            //private void deleteTask(final int id) {
             builder = new AlertDialog.Builder(context);
             inflater = LayoutInflater.from(context);
             View view = inflater.inflate(R.layout.confirm_popup, null);
@@ -164,7 +170,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 public void onClick(View v) {
                     //DatabaseHandler db = new DatabaseHandler(context);
                     //db.deleteTask(id);
-                    taskDao.deleteTask(id);
+                    //taskDao.deleteTask(id);
+                    mTaskViewModel.delete(task); // task with id
                     taskList.remove(getAdapterPosition());
                     notifyItemChanged(getAdapterPosition());
                     dialog.dismiss();

@@ -1,4 +1,4 @@
-package com.example.todo.data;
+package com.example.todo.database;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -8,7 +8,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
-import com.example.todo.model.Task;
 import com.example.todo.util.Constants;
 
 import java.text.DateFormat;

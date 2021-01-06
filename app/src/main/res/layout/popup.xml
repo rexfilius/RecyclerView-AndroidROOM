@@ -34,6 +34,7 @@
             <EditText
                 android:id="@+id/popup_time_duration"
                 android:hint="@string/hint_popup_time_duration"
+                android:inputType="number"
                 android:layout_below="@id/popup_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>

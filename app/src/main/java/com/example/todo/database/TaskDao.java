@@ -1,4 +1,4 @@
-package com.example.todo.data;
+package com.example.todo.database;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
@@ -6,8 +6,6 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
-
-import com.example.todo.model.Task;
 
 import java.util.List;
 

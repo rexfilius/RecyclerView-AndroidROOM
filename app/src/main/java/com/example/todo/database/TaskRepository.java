@@ -1,13 +1,9 @@
-package com.example.todo.util;
+package com.example.todo.database;
 
 import android.app.Application;
 import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
-
-import com.example.todo.data.TaskDao;
-import com.example.todo.data.TaskRoomDatabase;
-import com.example.todo.model.Task;
 
 import java.util.List;
 
